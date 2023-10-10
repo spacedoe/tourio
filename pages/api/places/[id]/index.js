@@ -11,7 +11,6 @@ export default async function handler(request, response) {
 
   if (request.method === "GET") {
     const place = await Place.findById(id);
-    console.log("place", place);
     // const allCommentIds = comment?.map((comment) => comment.$oid) || [];
     // const comment = place?.comments;
     // const comments = db_comments.filter((comment) =>
