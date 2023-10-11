@@ -55,14 +55,14 @@ export default function Comments({ id, locationName, comments, mutate }) {
     <Article>
       <FormContainer onSubmit={handleSubmitComment}>
         <Label htmlFor="name">Your Name</Label>
-        <Input type="text" name="name" placeholder="name" />
+        <Input type="text" name="name" placeholder="name" required/>
         <Label htmlFor="comment">Your Comment</Label>
-        <Input type="text" name="comment" placeholder="comment here..." />
+        <Input type="text" name="comment" placeholder="comment here..." required/>
         <StyledButton type="submit">Send</StyledButton>
       </FormContainer>
       {comments && (
         <>
-          <h1> {comments.length} fans commented on this place:</h1>
+          <h1> {comments.length} fan(s) commented on this place:</h1>
           {comments.map(({ _id, name, comment }) => {
             return (
               <Comment
