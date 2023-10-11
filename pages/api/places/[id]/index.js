@@ -1,5 +1,6 @@
 import Place from "../../../../db/models/Place";
 import dbConnect from "../../../../db/connect";
+import Comment from "../../../../db/models/Comment";
 
 export default async function handler(request, response) {
   await dbConnect();
@@ -7,6 +8,21 @@ export default async function handler(request, response) {
 
   if (!id) {
     return;
+  }
+
+  if (request.method === "POST") {
+    try {
+      const newComment = await Comment.create(request.body);
+      await Place.findByIdAndUpdate(
+        id,
+        { $push: { comments: newComment._id } },
+        { new: true }
+      );
+
+      return response.status(201).json({ status: "Comment created." });
+    } catch (error) {
+      return response.status(500).json({ error: error.message });
+    }
   }
 
   if (request.method === "GET") {

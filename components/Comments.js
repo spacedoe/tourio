@@ -3,7 +3,7 @@ import { FormContainer, Input, Label } from "./Form";
 import { StyledButton } from "./StyledButton.js";
 import { Fragment } from "react";
 
-export default function Comments({ locationName, comments }) {
+export default function Comments({ id, locationName, comments, mutate }) {
   const Article = styled.article`
     display: flex;
     flex-direction: column;
@@ -18,8 +18,27 @@ export default function Comments({ locationName, comments }) {
     }
   `;
 
-  function handleSubmitComment(e) {
+  async function handleSubmitComment(e) {
     e.preventDefault();
+    const formData = new FormData(e.target);
+    const comment = Object.fromEntries(formData);
+
+    const response = await fetch(`/api/places/${id}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(comment),
+    });
+
+    if (response.ok){
+      mutate()
+    }
+
+    if (!response.ok) {
+      const error = await response.json();
+      console.log("Error:", error, response.status);
+    }
   }
 
   return (
