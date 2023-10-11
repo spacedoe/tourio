@@ -31,13 +31,20 @@ export default function Comments({ id, locationName, comments, mutate }) {
       body: JSON.stringify(comment),
     });
 
-    if (response.ok){
-      mutate()
+    if (response.ok) {
+      mutate();
     }
 
     if (!response.ok) {
       const error = await response.json();
       console.log("Error:", error, response.status);
+    }
+  }
+
+  async function handleDeleteComment(_id) {
+    const response = await fetch(`/api/comments/${_id}`, { method: "DELETE" });
+    if (response.ok) {
+      mutate();
     }
   }
 
@@ -62,6 +69,7 @@ export default function Comments({ id, locationName, comments, mutate }) {
                   </small>
                 </p>
                 <span>{comment}</span>
+                <button onClick={() => handleDeleteComment(_id)}>Delete</button>
               </Fragment>
             );
           })}
