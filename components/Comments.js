@@ -13,6 +13,7 @@ export default function Comments({ id, locationName, comments, mutate }) {
     border: 5px solid black;
     border-radius: 0.8rem;
     padding: 0.5rem;
+    margin: 0 0 128px 0;
     text-align: center;
     p {
       border-bottom: solid 1px black;

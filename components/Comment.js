@@ -29,9 +29,14 @@ export const Comment = ({
     }
   };
   return showCommentEditInput ? (
-    <form onSubmit={handleSubmit}>
-      <textarea name="comment" defaultValue={comment}></textarea>
-      <button>{showCommentEditInput ? "Submit" : "Edit"}</button>
+    <form onSubmit={handleSubmit} style={{ width: "100%" }}>
+      <textarea
+        style={{ width: "100%" }}
+        name="comment"
+        defaultValue={comment}
+      ></textarea>
+      <button onClick={() => setShowCommentEditInput(false)}>Cancel</button>
+      <button>Submit</button>
     </form>
   ) : (
     <div>
@@ -40,10 +45,8 @@ export const Comment = ({
           <strong>{name}</strong> commented on {locationName}
         </small>
       </p>
-      <span>{comment}</span>
-      <button onClick={() => setShowCommentEditInput(!showCommentEditInput)}>
-        {showCommentEditInput ? "Submit" : "Edit"}
-      </button>
+      <p>{comment}</p>
+      <button onClick={() => setShowCommentEditInput(true)}>Edit</button>
       <button onClick={handleDeleteComment}>Delete</button>
     </div>
   );
