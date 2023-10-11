@@ -10,7 +10,7 @@ export default async function handler(request, response) {
   }
 
   if (request.method === "GET") {
-    const place = await Place.findById(id);
+    const place = await Place.findById(id).populate("comments");
     // const allCommentIds = comment?.map((comment) => comment.$oid) || [];
     // const comment = place?.comments;
     // const comments = db_comments.filter((comment) =>
@@ -33,5 +33,10 @@ export default async function handler(request, response) {
       { new: true }
     );
     return response.status(200).json(placeToUpdate);
+  }
+
+  if (request.method === "DELETE") {
+    const placeToDelete = await Place.findByIdAndDelete(id);
+    return response.status(200).json(placeToDelete);
   }
 }

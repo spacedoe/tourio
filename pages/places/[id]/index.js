@@ -37,10 +37,10 @@ export default function DetailsPage() {
 
   if (!isReady || isLoading || error) return <h2>Loading...</h2>;
 
-  function deletePlace() {
-    console.log("deleted?");
+  async function deletePlace() {
+    await fetch(`/api/places/${id}`, { method: "DELETE" });
+    router.push("/");
   }
-
   return (
     <>
       <Link href={"/"} passHref legacyBehavior>
@@ -72,7 +72,7 @@ export default function DetailsPage() {
           Delete
         </StyledButton>
       </ButtonContainer>
-      {/* <Comments locationName={place.name} comments={comments} /> */}
+      <Comments locationName={place.name} comments={place.comments} />
     </>
   );
 }
