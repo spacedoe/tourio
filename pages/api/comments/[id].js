@@ -15,4 +15,15 @@ export default async function handler(request, response) {
       .status(200)
       .json({ status: "Comment deleted successfully" });
   }
+
+  if (request.method === "PUT") {
+    await Comment.findByIdAndUpdate(id, {
+      $set: {
+        comment: request.body,
+      },
+    });
+    return response
+      .status(200)
+      .json({ status: "Comment updated successfully" });
+  }
 }

@@ -2,6 +2,8 @@ import styled from "styled-components";
 import { FormContainer, Input, Label } from "./Form";
 import { StyledButton } from "./StyledButton.js";
 import { Fragment } from "react";
+import { useState } from "react";
+import { Comment } from "./Comment";
 
 export default function Comments({ id, locationName, comments, mutate }) {
   const Article = styled.article`
@@ -62,15 +64,15 @@ export default function Comments({ id, locationName, comments, mutate }) {
           <h1> {comments.length} fans commented on this place:</h1>
           {comments.map(({ _id, name, comment }) => {
             return (
-              <Fragment key={_id}>
-                <p>
-                  <small>
-                    <strong>{name}</strong> commented on {locationName}
-                  </small>
-                </p>
-                <span>{comment}</span>
-                <button onClick={() => handleDeleteComment(_id)}>Delete</button>
-              </Fragment>
+              <Comment
+                key={_id}
+                id={_id}
+                name={name}
+                mutate={mutate}
+                comment={comment}
+                locationName={locationName}
+                handleDeleteComment={() => handleDeleteComment(_id)}
+              />
             );
           })}
         </>
