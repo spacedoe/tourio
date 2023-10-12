@@ -5,11 +5,11 @@ import Head from "next/head.js";
 const Main = styled.main`
   display: grid;
   gap: 0.5rem;
-  margin-top: 5rem;
+  margin: 5rem auto;
   padding: 0.5rem;
   position: relative;
   width: 100%;
-  // max-width: 600px;
+  max-width: 600px;
   place-content: center;
 `;
 
