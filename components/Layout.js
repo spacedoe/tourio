@@ -9,6 +9,8 @@ const Main = styled.main`
   padding: 0.5rem;
   position: relative;
   width: 100%;
+  // max-width: 600px;
+  place-content: center;
 `;
 
 export default function Layout({ children }) {

@@ -1,8 +1,6 @@
 import styled from "styled-components";
 import { FormContainer, Input, Label } from "./Form";
 import { StyledButton } from "./StyledButton.js";
-import { Fragment } from "react";
-import { useState } from "react";
 import { Comment } from "./Comment";
 
 export default function Comments({ id, locationName, comments, mutate }) {
@@ -45,9 +43,19 @@ export default function Comments({ id, locationName, comments, mutate }) {
   }
 
   async function handleDeleteComment(_id) {
-    const response = await fetch(`/api/comments/${_id}`, { method: "DELETE" });
+    const response = await fetch(`/api/comments/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ id: _id }),
+    });
+    console.log("response", response);
     if (response.ok) {
+      await response.json();
       mutate();
+    } else {
+      console.error(`Error: ${response.status}`);
     }
   }
 
@@ -55,9 +63,14 @@ export default function Comments({ id, locationName, comments, mutate }) {
     <Article>
       <FormContainer onSubmit={handleSubmitComment}>
         <Label htmlFor="name">Your Name</Label>
-        <Input type="text" name="name" placeholder="name" required/>
+        <Input type="text" name="name" placeholder="name" required />
         <Label htmlFor="comment">Your Comment</Label>
-        <Input type="text" name="comment" placeholder="comment here..." required/>
+        <Input
+          type="text"
+          name="comment"
+          placeholder="comment here..."
+          required
+        />
         <StyledButton type="submit">Send</StyledButton>
       </FormContainer>
       {comments && (
